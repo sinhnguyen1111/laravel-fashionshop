@@ -24,7 +24,11 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Danh sách người dùng</h3>
-
+                    @if(session()->has('success'))
+                        <div class="alert alert-success">{{ session()->get('success') }}</div>
+                    @elseif(session()->has('error'))
+                    <div class="alert alert-danger">{{ session()->get('error') }}</div>
+                    @endif
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -43,7 +47,7 @@
                             <th>ID</th>
                             <th>Email</th>
                             <th>Tên</th>
-                            <th>Thời gian</th>
+                            <th class="avatar">Avatar</th>
                             <th>Status</th>
                         </tr>
                         </thead>
@@ -55,8 +59,15 @@
                             <td>{{ $value->id }}</td>
                             <td>{{ $value->email }}</td>
                             <td>{{ $value->name }}</td>
-                            <td>{{ $value->created_at }}</td>
-                            <td>{{ $value->remember_token }}</td>
+                            <td>
+                                <img src="{{ asset('storage/'.$value->profile_photo_path) }}" alt="avatar" class="image">
+                            </td>
+                            {{-- <td>{{ $value->created_at }}</td> --}}
+                            {{-- <td>{{ $value->role }}</td> --}}
+                            <td>
+                                <a href="{{ route('backend.user.edit',$value->id) }}">Sửa</a>
+                                <a href="{{ route('backend.user.delete',$value->id) }}">Xóa</a>
+                            </td>
                         </tr>
                         @endforeach
                         {{ $users->links() }}

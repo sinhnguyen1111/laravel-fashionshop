@@ -25,7 +25,7 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'username'=>'required|min:8|max:20',
-            'email'=>'required',
+            'email'=>'required|email',
             'password'=>'required|min:8|max:20',
             'status'=>'required',
         ];
@@ -35,7 +35,8 @@ class StoreUserRequest extends FormRequest
         return [
             'required'=>':attribute không được để trống',
             'min'=>':attribute không được nhỏ hơn :min',
-            'max'=>':attribute không được lớn hớn :max'
+            'max'=>':attribute không được lớn hớn :max',
+            'email'=>':attribute không đúng định dạng abc@gmail.com'
         ];
 
     }

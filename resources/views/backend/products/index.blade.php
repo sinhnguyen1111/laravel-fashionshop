@@ -7,9 +7,9 @@
             <h1 class="m-0 text-dark">Danh sách sản phẩm</h1>
         </div><!-- /.col -->
         @if(session()->has('success'))
-        <h2 style="color:red">{{ session()->get('success') }}</h2>
+        <div class="alert alert-success">{{ session()->get('success') }}</div>
         @elseif(session()->has('error'))
-        <h2>{{ session()->get('error') }}</h2>
+        <div class="alert alert-danger">{{ session()->get('error') }}</div>
         @endif
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -50,20 +50,41 @@
                             <th>Giá gốc</th>
                             <th>Giá sale</th>
                             <th>Danh mục</th>
+                            <th>Hình ảnh</th>
                             <th>Chỉnh sửa</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach ($products as $item)
+                     
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->origin_price }}</td>
                                 <td>{{ $item->sale_price }}</td>
-                                <td></td>
+                                <td>{{ optional($item->category)->name }}</td>
+                               <td>
+                                  <img src={{ asset('storage/'.$item->avatar) }} alt="hoddie" class="avt">
+                               </td>
                                 <td>
-                                    <a href="{{ route('backend.product.edit',$item->id) }}">Sửa</a>
-                                <a href="{{ route('backend.product.delete',$item->id) }}">Xóa</a></td>
+                                    <form action="{{ route('backend.product.edit',$item->id) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="_method" value="GET">
+                                        {{-- <a href="{{ route('backend.product.delete',$item->id) }}">Xóa</a> --}}
+                                        <button type="submit" class="btn btn-primary">Sửa</button>
+                                    </form>
+                                </td>
+                                <td>
+                                   
+                                    <form action="{{ route('backend.product.delete',$item->id) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        {{-- <a href="{{ route('backend.product.delete',$item->id) }}">Xóa</a> --}}
+                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                    </form>
+
+                                    
+                                </td>
                             </tr>
                             @endforeach
                             {{ $products->links() }}

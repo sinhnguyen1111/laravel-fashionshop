@@ -38,27 +38,23 @@
                             <div class="alert alert-danger origin">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
-                            <label>Danh mục sản phẩm</label>
-                            <select class="form-control select2" style="width: 100%;">
-                                <option>--Chọn danh mục---</option>
-                                @foreach($categories as $value)
-                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                @endforeach
-                               
+                            <label>Danh mục cha </label>
+                            <select class="form-control select2" style="width: 100%;" name="parent_id">
+                                <option value="0">--Chọn danh mục---</option>
+                               {!! $option !!}
+                               {{-- <option value="1">bag</option> --}}
                                 {{-- <option>Máy tính</option>
                                 <option>Máy ảnh</option>
                                 <option>Phụ kiện</option> --}}
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Thương hiệu sản phẩm</label>
-                            <select class="form-control select2" style="width: 100%;">
-                                <option>--Chọn thương hiệu---</option>
-                                <option>Apple</option>
-                                <option>Samsung</option>
-                                <option>Nokia</option>
-                                <option>Oppo</option>
-                            </select>
+                            <label>Màu sắc</label>
+                            <input type="text" class="form-control" name="color" placeholder="Điền màu sắc">
+                        </div>
+                        <div class="form-group">
+                            <label>Size</label>
+                            <input type="text" class="form-control" name="size" placeholder="điền kích thước quần áo">
                         </div>
                         <div class="row">
                             <div class="col-6">
@@ -76,7 +72,7 @@
                                     <label>Giá bán</label>
                                     <input type="text" class="form-control" placeholder="Điền giá bán" name="sale_price">
                                 </div>
-                                @error('origin_sale')
+                                @error('sale_price')
                                      <div class="alert alert-danger origin">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -92,7 +88,7 @@
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input"  id="exampleInputFile" name="images[]" multiple>
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    <label class="custom-file-label" for="exampleInputFile">Chọn file</label>
                                 </div>
                                 <div class="input-group-append">
                                     <span class="input-group-text" id="">Upload</span>

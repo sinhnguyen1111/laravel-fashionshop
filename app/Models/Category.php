@@ -15,9 +15,17 @@ class Category extends Authenticatable
      *
      * @var array
      */
+    protected $table='categories';
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'slug', 'parent_id',
     ];
+    public function products(){
+        return $this->hasMany('App\Models\Product','category_id');
+    }
+    public function categoryChildrent(){
+        return $this->hasMany('App\Models\Category','parent_id');
+    }
+
 
     /**
      * The attributes that should be hidden for arrays.

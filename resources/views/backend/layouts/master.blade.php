@@ -30,6 +30,19 @@
         .origin{
             width: 40%;
         }
+        .avatar{
+            width: 20%;
+        }
+        .image{
+            width: 30%;
+        }
+        .avt{
+            width: 105px;
+        }
+        .image_product{
+            width: 155px;
+            display: inline;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">

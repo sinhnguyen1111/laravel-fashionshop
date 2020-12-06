@@ -5,22 +5,28 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
-use Illuminate\Support\Facades\Validator;
+// use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Image;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    protected $option;
+    public function __contruct(){
+        $this->option='';
+    }
+   
     public function index()
     {
-        // dd($user);
-        $products = Product::paginate(5);
-        // dd($products);
+        
+        $products = Product::first()->orderBy('created_at','desc')->paginate(5);
+
+       
         return view('backend.products.index')->with([
             'products' => $products
         ]);
@@ -29,133 +35,173 @@ class ProductController extends Controller
     }
     public function create()
     {
+        $product = Product::get();
         $categories = Category::get();
-
-        return view('backend.products.create')->with([
-            'categories'=>$categories
-        ]);
-    }
-    public function store(StoreProductRequest $request)
-    {
-    //     $validator = Validator::make($request->all(),
-    //     [
-    //         'name'         => 'required|min:10|max:255',
-    //         'origin_price' => 'required|numeric',
-    //         'sale_price'   => 'required|numeric',
-    //     ],
-    //     [
-    //         'required' => ':attribute Không được để trống',
-    //         'min' => ':attribute Không được nhỏ hơn :min',
-    //         'max' => ':attribute Không được lớn hơn :max'
-    //     ],
-    //     [
-    //         'name' => 'Tên sản phẩm',
-    //         'origin_price' => 'Giá gốc',
-    //         'sale_price' => 'Giá bán'
-    //     ]
-    // );
-    // if ($validator->errors()){
-    //     return back()
-    //         ->withErrors($validator)
-    //         ->withInput();
-    // }
-    if ($request->hasFile('images')){
-        /**Lưu file vào trong storage */
-        //C1:
-        $files = $request->file('images');
-        foreach($files as $file){
-            $path = Storage::disk('public')->putFileAs('images',$file,$file->getClientOriginalName());
-
-    
-        //C2:
-        // $file = $request->file('image');
-        // $name = $file->getClientOriginalName();
-        // $file->move('avatar', $name);
-        // dd($path);
-        $image = new Image();
-        $image->name= $file->getClientOriginalName();
-        $image->path= $path;
-        $image->product_id=1;
-        $image->save();
+        $data  = Category::all();
+      
+        foreach($data as $item){
+            if($item['parent_id']==0){
+                $this->option.="<option value='".$item['id']."'>".$item['name']."</option>" ;
+                foreach($data as $item1){
+                    if($item1['parent_id']==$item['id']){
+                        $this->option.="<option value='".$item1['id']."'>"."--".$item1['name']."</option>" ;
+                    }
+                }
+            }
         }
 
-    }else{
-        dd('khong co file');
+        return view('backend.products.create')->with([
+            'categories'=>$categories,
+            'option'=>$this->option,
+            'products'=>$product
+        ]);
     }
-        // dd($request->all());
+    public function store(Request $request)
+    {
+        
         $product = new Product();
+      
         $product->name = $request->get('name');
         $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
-        // $product->category_id = $request->get('category_id');
+        $product->category_id = $request->get('parent_id');
+        $product->color = $request->get('color');
+        $product->size = $request->get('size');
         $product->origin_price = $request->get('origin_price');
         $product->sale_price = $request->get('sale_price');
         $product->content = $request->get('content');
-        // $product->status = $request->get('status');
-        // $product->user_id = Auth::user()->id;
-        $save = $product->save();
-        if($save){
-            $request->session()->flash('success','Thêm mới thành công');
-        }
-        else{
-            $request->sesion()->flash('error','Thêm mới lỗi');
-        }
+       
+        $product->status = $request->get('status');
+        $product->user_id = Auth::user()->id;
+        if ($request->hasFile('images')){
+            /**Lưu file vào trong storage */
+            // //C1:
+            $get_images = $request->file('images');
+            // dd( $get_images);
+            foreach($get_images as $file){
+                $path = Storage::disk('public')->putFileAs('images',$file,$file->getClientOriginalName(),$request->user()->id);
+                $product->avatar = $path;   
+                $save = $product->save();
+    
+                $image = new Image();
+                $image->name= $file->getClientOriginalName();
+                $image->path= $path;
+                $image->product_id=$product->id;
+                $image->user_id =0; 
+                $image->save();
+          
+                if($save){
+                    $request->session()->flash('success','Thêm mới thành công');
+                }
+                else{
+                    $request->sesion()->flash('error','Thêm mới lỗi');
+                }
+            }
         
-
+           
+        }
         return redirect()->route('backend.product.index');
     }
 
-   
-    public function show($id)
-    {
-       
-    }
 
+   
    
     public function edit($id)
     {
-        $user = Auth::user($id);
-        $product = Product::find($id);
-        if ($user->can('update', $product)) {
-            dd('có');
+        $data  = Category::all();
+        // dd($data);
+        foreach($data as $item){
+            if($item['parent_id']==0){
+                $this->option.="<option value='".$item['id']."'>".$item['name']."</option>" ;
+                foreach($data as $item1){
+                    if($item1['parent_id']==$item['id']){
+                        $this->option.="<option value='".$item1['id']."'>"."--".$item1['name']."</option>" ;
+                    }
+                }
+            }
         }
-        else{
-            dd('không');
-        }
+        // $user = Auth::user(1);
+        // dd($user);
+        // $product = Product::find($id);
+        // if ($user->can('update', $product)) {
+        //     dd('có');
+        // }
+        // else{
+        //     dd('không');
+        // }
 
-        if(Gate::allows('update-product',$product)){
-            dd('có');
-        }
-        else{
-            dd('không');
-        }
-        // $products = Product::find($id);
+        // if(Gate::allows('update-product',$product)){
+        //     dd('có');
+        // }
+        // else{
+        //     dd('không');
+        // }
+        $products = Product::find($id);
         $categories = Category::get();
         return view ('backend.products.edit',[
             'categories'=>$categories,
-            'product'=>$products
+            'product'=>$products,
+            'option'=>$this->option
         ]);
 
     }
 
  
-    public function update(StoreProductRequest $request,$id)
+    public function update(Request $request,$id)
     {
+    //    
+
        $product = Product::find($id);
+    //    dd($product);
+
       
        $product->name = $request->get('name');
        $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
-       // $product->category_id = $request->get('category_id');
+       $product->category_id = $request->get('parent_id');
        $product->origin_price = $request->get('origin_price');
-       $product->sale_price = $request->get('sale_price');
+       $product->sale_price = $request->get('origin_sale');
        $product->content = $request->get('content');
        $product->status = $request->get('status');
-       $product->save();
+       $product->user_id = Auth::user()->id;
+       if ($request->hasFile('images')){
+        /**Lưu file vào trong storage */
+        // //C1:
+        $get_images = $request->file('images');
+        // dd( $get_images);
+        foreach($get_images as $file){
+            $path = Storage::disk('public')->putFileAs('images',$file,$file->getClientOriginalName(),$request->user()->id);
+            $product->avatar = $path;   
+            $save = $product->save();
+
+            $image = new Image();
+            $image->name= $file->getClientOriginalName();
+            $image->path= $path;
+            $image->product_id=$product->id;
+            $image->user_id =0; 
+            $image->save();
+      
+            if($save){
+                $request->session()->flash('success','Thêm mới thành công');
+            }
+            else{
+                $request->sesion()->flash('error','Thêm mới lỗi');
+            }
+        }
+    
+       
+    }
+     
        return redirect()->route('backend.product.index');
     }
 
-    public function destroy($id){
+    public function destroy($id,Request $request){
         $product = Product::find($id);
-        $product->delete();
+        $delete=$product->delete();
+        if($delete){
+            $request->session()->flash('success','Xóa thành công');
+        }
+        else{
+            $request->sesion()->flash('error','Xóa lỗi');
+        }
         
         return redirect()->route('backend.product.index');
     }

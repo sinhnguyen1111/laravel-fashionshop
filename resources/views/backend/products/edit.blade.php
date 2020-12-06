@@ -27,11 +27,9 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" action="{{ route('backend.product.update',$product->id) }}" method="POST">
+                <form role="form" action="{{ route('backend.product.update',$product->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    {{ csrf_field() }}
-                    {{ method_field('PUT') }}
-                    
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Tên sản phẩm</label>
@@ -41,28 +39,17 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
-                            <label>Danh mục sản phẩm</label>
-                            <select class="form-control select2" style="width: 100%;">
-                                {{-- <option>--Chọn danh mục---</option> --}}
-                                @foreach($categories as $value)
-                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                @endforeach
-                               
+                            <label>Danh mục cha </label>
+                            <select class="form-control select2" style="width: 100%;" name="parent_id">
+                                <option value="0">--Chọn danh mục---</option>
+                               {!! $option !!}
+                               {{-- <option value="1">bag</option> --}}
                                 {{-- <option>Máy tính</option>
                                 <option>Máy ảnh</option>
                                 <option>Phụ kiện</option> --}}
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Thương hiệu sản phẩm</label>
-                            <select class="form-control select2" style="width: 100%;">
-                                <option>--Chọn thương hiệu---</option>
-                                <option>Apple</option>
-                                <option>Samsung</option>
-                                <option>Nokia</option>
-                                <option>Oppo</option>
-                            </select>
-                        </div>
+                        
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -76,10 +63,10 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Giá bán</label>
-                                    <input type="text" class="form-control" placeholder="Điền giá gốc" name="sale_price" value="{{ $product->sale_price }}">
+                                    <input type="text" class="form-control" placeholder="Điền giá gốc" name="origin_sale" value="{{ $product->sale_price }}">
                                 </div>
                             </div>
-                            @error('sale_price')
+                            @error('origin_sale')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -92,12 +79,24 @@
                             <label for="exampleInputFile">Hình ảnh sản phẩm</label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input"  id="exampleInputFile">
+                                    <input type="file" class="custom-file-input"  id="exampleInputFile" name="images[]" multiple>
                                     <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                 </div>
                                 <div class="input-group-append">
                                     <span class="input-group-text" id="">Upload</span>
                                 </div>
+                            </div>
+                            <div>
+                                @foreach($product->images as $value)
+                                <div class="row">
+                                    <div class="col-3">
+                                    <img src="{{ asset('storage/'.$value->path) }}" alt="ảnh" class="image_product">
+
+                                    </div>
+                                </div>
+                                    
+                                @endforeach
+                               
                             </div>
                         </div>
                         <div class="form-group">

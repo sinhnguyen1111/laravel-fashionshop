@@ -19,53 +19,27 @@
                     <ul class="dropdown-menu megamenu-content" role="menu">
                         <li>
                             <div class="row">
-                                <div class="col-menu col-md-3">
-                                    <h6 class="title">Top</h6>
-                                    <div class="content">
-                                        <ul class="menu-col">
-                                            <li><a href="shop.html">Jackets</a></li>
-                                            <li><a href="shop.html">Shirts</a></li>
-                                            <li><a href="shop.html">Sweaters & Cardigans</a></li>
-                                            <li><a href="shop.html">T-shirts</a></li>
-                                        </ul>
-                                    </div>
+                               @foreach ($cate as $value)
+                               <div class="col-menu col-md-3">
+                                    {{-- {{ dd($value->name) }} --}}
+                                <h6 class="title">{{ $value->name }}</h6>
+                                <div class="content">
+                                    <ul class="menu-col">
+                                        @foreach ($value->categoryChildrent as $item)
+                                            
+                                        <li><a href="shop.html">{{ $item->name }}</a></li>
+                                        @endforeach
+
+                                       
+                                    </ul>
                                 </div>
-                                <!-- end col-3 -->
-                                <div class="col-menu col-md-3">
-                                    <h6 class="title">Bottom</h6>
-                                    <div class="content">
-                                        <ul class="menu-col">
-                                            <li><a href="shop.html">Swimwear</a></li>
-                                            <li><a href="shop.html">Skirts</a></li>
-                                            <li><a href="shop.html">Jeans</a></li>
-                                            <li><a href="shop.html">Trousers</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- end col-3 -->
-                                <div class="col-menu col-md-3">
-                                    <h6 class="title">Clothing</h6>
-                                    <div class="content">
-                                        <ul class="menu-col">
-                                            <li><a href="shop.html">Top Wear</a></li>
-                                            <li><a href="shop.html">Party wear</a></li>
-                                            <li><a href="shop.html">Bottom Wear</a></li>
-                                            <li><a href="shop.html">Indian Wear</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-menu col-md-3">
-                                    <h6 class="title">Accessories</h6>
-                                    <div class="content">
-                                        <ul class="menu-col">
-                                            <li><a href="shop.html">Bags</a></li>
-                                            <li><a href="shop.html">Sunglasses</a></li>
-                                            <li><a href="shop.html">Fragrances</a></li>
-                                            <li><a href="shop.html">Wallets</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- end col-3 -->
+                             
+                                
+                            </div>
+                               @endforeach
+                                
+                               
+                               
                             </div>
                             <!-- end row -->
                         </li>

@@ -17,7 +17,15 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Route::get('cart/add/{id}','Frontend\CartController@add')->name('cart.add');
+Route::get('listcart','Frontend\CartController@index')->name('frontend.cart.index');
+Route::get('cart/remove/{id}','Frontend\CartController@remove')->name('frontend.cart.remove');
+
 Auth::routes();
+// Route::get('admin','LoginController@showLoginForm')->name('admin.login');
+// Route::post('admin','LoginController@login')->name('login');
+Route::get('/home','HomeController@index')->name('home');
+
 Route::get('/logout',function(){
     Auth::logout();
     return redirect()->route('login');
@@ -30,45 +38,65 @@ Route::get('/logout',function(){
 
 // ]);
 
+Route::get('admin','Backend\DashboardController@index')->name('backend.dashboard');
 
-// Route::get('/login', 'HomeController@index')->name('home');
-// Route::get('/','Auth\LoginController@showLoginForm')->name('show');
-// Route::post('/logout','Auth\LoginController@logout')->name('logout');
-
-Route::get('admin', function () {
-    return view('backend.dashboard');
-})->name('admin');
 //Product//
-Route::get('admin/product/index','Backend\ProductController@index')->name('backend.product.index');
-Route::get('admin/product/create','Backend\ProductController@create')->name('backend.product.create');
-Route::post('admin/product/store','Backend\ProductController@store')->name('backend.product.store');
-Route::get('admin/product/{id}/delete','Backend\ProductController@destroy')->name('backend.product.delete');
-Route::put('admin/product/{id}/update','Backend\ProductController@update')->name('backend.product.update');
-Route::get('admin/product/{id}/edit','Backend\ProductController@edit')->name('backend.product.edit');
+Route::group([
+    'prefix'=>'admin/product',
+],function(){
+    Route::get('index','Backend\ProductController@index')->name('backend.product.index');
+
+    Route::get('create','Backend\ProductController@create')->name('backend.product.create');
+
+    Route::post('store','Backend\ProductController@store')->name('backend.product.store');
+
+    Route::delete('{id}/delete','Backend\ProductController@destroy')->name('backend.product.delete');           
+
+    Route::put('{id}/update','Backend\ProductController@update')->name('backend.product.update');
+
+    Route::get('/{id}/edit','Backend\ProductController@edit')->name('backend.product.edit');
+});
+
 
 
 
 ///Users
+Route::group([
+    'prefix'=>'admin/user',
+],function(){
+    Route::get('create','Backend\UserController@create')->name('backend.user.create');
 
-Route::get('admin/user/create','Backend\UserController@create')->name('backend.user.create');
-Route::get('admin/user/index','Backend\UserController@index')->name('backend.user.index');
-Route::post('admin/user/store','Backend\UserController@store')->name('backend.user.store');
-Route::put('admin/user/{id}/update','Backend\UserController@update')->name('backend.user.update');
-Route::get('admin/user/{id}/edit','Backend\UserController@edit')->name('backend.user.edit');
+    Route::get('index','Backend\UserController@index')->name('backend.user.index');
+
+    Route::post('store','Backend\UserController@store')->name('backend.user.store');
+
+    Route::put('{id}/update','Backend\UserController@update')->name('backend.user.update');
+
+    Route::get('/{id}/delete','Backend\UserController@destroy')->name('backend.user.delete');
+
+    Route::get('{id}/edit','Backend\UserController@edit')->name('backend.user.edit');
+});
+
+
 
 //Category
-Route::get('admin/category/index','Backend\CategoryController@index')->name('backend.category.index');
-Route::get('admin/category/create','Backend\CategoryController@create')->name('backend.category.create');
-Route::post('admin/category/store','Backend\CategoryController@store')->name('backend.category.store');
-Route::put('admin/category/update','Backend\CategoryController@update')->name('backend.category.update');
-Route::get('admin/category/{id}/edit','Backend\CategoryController@edit')->name('backend.category.edit');
+Route::group([
+    'prefix'=>'admin/category',
+],function(){
+    Route::get('index','Backend\CategoryController@index')->name('backend.category.index');
+    Route::get('create','Backend\CategoryController@create')->name('backend.category.create');
+    Route::post('store','Backend\CategoryController@store')->name('backend.category.store');
+    Route::put('update','Backend\CategoryController@update')->name('backend.category.update');
+    Route::get('{id}/edit','Backend\CategoryController@edit')->name('backend.category.edit');
+    Route::get('{id}/delete','Backend\CategoryController@destroy')->name('backend.category.delete');
+});
 
 
 
 Route::get('/','Frontend\HomeController@index')->name('home.index');
 Route::get('/about_us','Frontend\AboutController@index')->name('about.index');
-// Route::get('/product','Frontend\ProductController@index')->name('product.index');
-Route::get('/contact','Frontend\ContactController@index')->name('contact.index');
+Route::get('/detail_product','Frontend\ProductController@show')->name('product.show');
+// Route::get('/contact','Frontend\ContactController@index')->name('contact.index');
 
 Route::get('user_info',[App\Http\Controllers\Backend\UserController::class,'test']);
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

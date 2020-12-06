@@ -15,9 +15,17 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table='users';
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role'
     ];
+    public function image(){
+        return $this->hasOne('App\Models\Image','user_id','id');
+    }
+    public function userInfo(){
+        return $this->hasOne('App\Models\UserInfo');
+    }
+
 
     /**
      * The attributes that should be hidden for arrays.

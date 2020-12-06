@@ -41,7 +41,13 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        if($user->role = 0)
+        {
+            return false;
+        }
+        else{ 
+            return true;
+        }
     }
 
     /**

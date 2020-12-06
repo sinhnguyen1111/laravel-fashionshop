@@ -12,6 +12,7 @@
                     <li class="breadcrumb-item active">Dashboard v1</li>
                 </ol>
             </div><!-- /.col -->
+           
         </div>
     </div>
 </div>
@@ -39,7 +40,7 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>5300</h3>
+                        <h3>{{ $product_count }}</h3>
 
                         <p>Sản phẩm</p>
                     </div>
@@ -54,8 +55,9 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>44</h3>
-
+                    
+                        <h3>{{ $user_count }}</h3>
+                       
                         <p>Người dùng</p>
                     </div>
                     <div class="icon">
@@ -101,47 +103,36 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Thời gian</th>
-                                <th>Status</th>
-                                <th>Mô tả</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>183</td>
-                                <td>John Doe</td>
-                                <td>11-7-2014</td>
-                                <td><span class="tag tag-success">Approved</span></td>
-                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
-                            <tr>
-                                <td>219</td>
-                                <td>Alexander Pierce</td>
-                                <td>11-7-2014</td>
-                                <td><span class="tag tag-warning">Pending</span></td>
-                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
-                            <tr>
-                                <td>657</td>
-                                <td>Bob Doe</td>
-                                <td>11-7-2014</td>
-                                <td><span class="tag tag-primary">Approved</span></td>
-                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
-                            <tr>
-                                <td>175</td>
-                                <td>Mike Doe</td>
-                                <td>11-7-2014</td>
-                                <td><span class="tag tag-danger">Denied</span></td>
-                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Thời gian</th>
+                                    <th>Status</th>
+                                    <th>Mô tả</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                 @foreach($new_product as $product)
+                                 <tr>
+                                    <td>{{ $product->id }}</td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>11-7-2014</td>
+                                    <td><span class="tag tag-success">{{ $product->status }}</span></td>
+                                    <td>{{ $product->content }}</td>
+                                </tr>
+                                 @endforeach
+                                
+                               
+                                    
+                                  
+                                
+                                </tbody>
+                            </table>
+                        
+                        
                     </div>
                     <!-- /.card-body -->
                 </div>

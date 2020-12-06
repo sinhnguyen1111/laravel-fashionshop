@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -41,6 +46,25 @@ class LoginController extends Controller
     }
     public function showLoginForm(){
         return view('auth.login');
+    }
+    public function login(Request $request){
+     
+    
+        $arr = [
+            'email'=>$request->email,
+            'password'=>$request->password
+        ];
+        if(Auth::attempt($arr)){
+            $request->session()->flash('success','Đăng nhập thành công');
+            return view('backend.dashboard');
+        }
+        else{
+        // else if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'role'=>0])){
+          
+            $request->session()->flash('fail','Đăng nhập không thành công');
+                // return  redirect()->route('frontend.index');
+               
+        }
     }
     protected function logout(Request $request){
         return redirect()->route('login');

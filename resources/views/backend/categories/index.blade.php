@@ -5,7 +5,13 @@
     <div class="row mb-2">
         <div class="col-sm-6">
             <h1 class="m-0 text-dark">Danh mục sản phẩm</h1>
+            @if(session()->has('success'))
+            <div class="alert alert-success">{{ session()->get('success') }}</div>
+        @elseif(session()->has('error'))
+            <div class="alert alert-danger">{{ session()->get('success') }}</div>
+        @endif
         </div><!-- /.col -->
+       
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -43,7 +49,7 @@
                                 <th>ID</th>
                                 <th>Tên danh mục</th>
                                 <th>Parent_id</th>
-                                <th>Status</th>
+                               
                                 <th>Mô tả</th>
                                 <th>Hoạt động</th>
                             </tr>
@@ -58,6 +64,7 @@
                                 <td><span class="tag tag-success">Approved</span></td>
                                 <td>
                                     <a href="{{ route('backend.category.edit',$value->id) }}">Sửa</a>
+                                    <a href="{{ route('backend.category.delete',$value->id) }}">Xóa</a>
                                 </td>
                                 {{-- <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td> --}}
                             </tr>

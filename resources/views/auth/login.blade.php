@@ -5,6 +5,9 @@
     <div class="login-logo">
         <a href="../../index2.html"><b>Admin</b>LTE</a>
     </div>
+    @if(session()->has('fail'))
+    <div style="color:red">{{ session()->get('fail') }}</div>
+@endif
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
@@ -21,7 +24,11 @@
                         </div>
                         
                     </div>
+                   
                 </div>
+                @error('email')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" name="password" placeholder="Password">
                     <div class="input-group-append">
@@ -30,6 +37,9 @@
                         </div>
                     </div>
                 </div>
+                @error('password')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <div class="row">
                     <div class="col-8">
                         <div class="icheck-primary">

@@ -5,16 +5,21 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use App\User;
+use App\Models\Image;
 use App\Http\Requests\StoreUserRequest;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
 {
     public function index()
     {
-        // dd($user);
-        $users = DB::table('users')->paginate(5); 
+      
+
+        $users = User::select()->orderBy('created_at','desc')->paginate(5);
+      
         return view('backend.users.index')->with([
             'users' => $users
         ]);
@@ -27,31 +32,105 @@ class UserController extends Controller
     }
     public function store(StoreUserRequest $request)
     {
+        
+
         $user = new User();
         $user->name = $request->get('username');
         $user->email = $request->get('email');
-        $user->password = $request->get('password');
-        $user->remember_token=$request->get('status');
-        $user->save();
+        $user->password = Hash::make($request->get('password'));
+        $user->role = $request->get('status');
+
+        if($request->hasFile('avatar')){
+       
+            $file = $request->file('avatar');
+          
+            $path = Storage::disk('public')->putFileAs('avatar',$file,$file->getClientOriginalName());
+           
+            $user->profile_photo_path= $path;
+           
+        }
+        $file = $request->file('avatar');
+       
+        $save = $user->save();
+          $avatar = new Image();
+            $avatar->name = $file->getClientOriginalName();
+            $avatar->path = $path;
+               $avatar->product_id=0;
+            $avatar->user_id=$user->id;
+        $avatar->save();
+       
+        if($save){
+            $request->session()->flash('success','Thêm mới thành công');
+        }
+        else{
+            $request->session()->flash('error','Thêm mới lỗi');
+        }
         return redirect()->route('backend.user.index');
     }
 
    
-    public function show($id)
-    {
-       
-    }
+    
 
    
     public function edit($id)
     {
+        $user = User::find($id);
+        // $users = User::get();
         
+        return view('backend.users.edit',[
+            'users'=>$user
+        ]);
     }
 
  
     public function update(Request $request, $id)
     {
+        $user = User::find($id);
+        // dd($user);
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = $request->get('password');
        
+        if($request->hasFile('avatar')){
+       
+            $file = $request->file('avatar');
+            // dd($file);
+            $path = Storage::disk('public')->putFileAs('avatar',$file,$file->getClientOriginalName());
+        //    dd($path);
+            $user->profile_photo_path= $path;
+            $save = $user->save();
+            $avatar = new Image();
+              $avatar->name = $file->getClientOriginalName();
+              $avatar->path = $path;
+                 $avatar->product_id=0;
+              $avatar->user_id=$user->id;
+          $avatar->save();
+         
+          if($save){
+              $request->session()->flash('success','Chỉnh sửa thành công');
+          }
+          else{
+              $request->session()->flash('error','Chỉnh sửa thông tin thất bại!!');
+          }
+        }
+        // $file = $request->file('avatar');
+       
+      
+        return redirect()->route('backend.user.index');
+
+       
+    }
+    public function destroy(Request $request,$id){
+        $user = User::find($id);
+        $delete = $user->delete();
+        if($delete){
+            $request->session()->flash('success','Xóa thành công');
+        }
+        else{
+            $request->session()->flash('error','Xóa thông tin thất bại!!');
+        }
+      
+        return redirect()->route('backend.user.index');
     }
 
     public function test()

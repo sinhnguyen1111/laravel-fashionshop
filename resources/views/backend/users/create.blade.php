@@ -27,7 +27,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" action="{{ route('backend.user.store') }}" method="POST">
+                <form role="form" action="{{ route('backend.user.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -52,11 +52,24 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
+                            <label for="exampleInputFile">Hình ảnh sản phẩm</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input"  id="exampleInputFile" name="avatar" multiple>
+                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="">Upload</span>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Quyền</label>
                             <select class="form-control select2" style="width: 100%;" name="status">
                                 <option>--Chọn quyền---</option>
-                                <option value="Admin">Admin</option>
-                                <option value="User">User</option>
+                                <option value="0">Admin</option>
+                                <option value="1">User</option>
                             </select>
                         </div>
                         @error('status')

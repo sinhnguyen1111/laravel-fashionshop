@@ -25,7 +25,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name'=>'required|min:5|max:255',
-            'parent_id'=>'numeric'
+            'parent_id'=>'required'
         ];
     }
     public function messages()

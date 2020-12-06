@@ -22,9 +22,6 @@ class CategoriesTableSeeder extends Seeder
                 'name'=>'Coats',
             ],
             [
-                'name' => 'Làm bài tập View trong Laravel',
-            ],
-            [
                 'name'=>'T-Shirts',
             ],
             [

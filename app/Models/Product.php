@@ -15,9 +15,17 @@ class Product extends Authenticatable
      *
      * @var array
      */
+    protected $table='products';
     protected $fillable = [
-        'name', 'email', 'password',
+        'name','slug','color','size','origin_price', 'sale_price', 'content', 'category_id'
     ];
+    public function images(){
+        return $this->hasMany('App\Models\Image','product_id','id');
+    }
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category');
+    }
 
     /**
      * The attributes that should be hidden for arrays.

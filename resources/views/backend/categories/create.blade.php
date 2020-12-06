@@ -38,8 +38,15 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Parent_id</label>
-                            <input type="text" class="form-control" id="" placeholder="Điền tên danh mục " name="parent_id">
+                            <label>Danh mục cha </label>
+                            <select class="form-control select2" style="width: 100%;" name="parent_id">
+                                <option value="0">--Chọn danh mục---</option>
+                               {!! $option !!}
+                               {{-- <option value="1">bag</option> --}}
+                                {{-- <option>Máy tính</option>
+                                <option>Máy ảnh</option>
+                                <option>Phụ kiện</option> --}}
+                            </select>
                         </div>
                         @error('parent_id')
                             <div class="alert alert-danger">{{ $message }}</div>
