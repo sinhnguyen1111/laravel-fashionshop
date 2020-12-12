@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="/frontend/css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/frontend/css/custom.css">
+    <link rel="stylesheet" href="/frontend/fontawesome-free-5.13.0-web/css/fontawesome.min.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -75,6 +76,7 @@
     <script src="/frontend/js/jquery-3.2.1.min.js"></script>
     <script src="/frontend/js/popper.min.js"></script>
     <script src="/frontend/js/bootstrap.min.js"></script>
+    <script src="/frontend/fontawesome-free-5.13.0-web/js/fontawesome.min.js"></script>
     <!-- ALL PLUGINS -->
     <script src="/frontend/js/jquery.superslides.min.js"></script>
     <script src="/frontend/js/bootstrap-select.js"></script>

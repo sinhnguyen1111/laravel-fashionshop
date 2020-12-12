@@ -27,9 +27,10 @@ class StoreProductRequest extends FormRequest
         return [
             'name'=>'required|min:8|max:255',
             'origin_price'=>'required|numeric',
-            'origin_sale'=>'required|numeric',
+            'sale_price'=>'required|numeric',
             'images'=>'required',
-            'status'=>'required'
+            'status'=>'required',
+            'parent_id'=>'required'
             
         ];
     }
@@ -46,10 +47,10 @@ class StoreProductRequest extends FormRequest
         return [
             'name'=>'Tên sản phẩm',
             'origin_price'=>'Giá gốc',
-            'origin_sale'=>'Giá bán',
+            'sale_price'=>'Giá bán',
             'images'=>'Ảnh sản phẩm',
             'status'=>'Trạng thái sản phẩm',
-
+            'parent_id'=>'Danh mục'
         ];
     }
 }

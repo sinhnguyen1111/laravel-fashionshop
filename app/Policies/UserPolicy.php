@@ -41,13 +41,13 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        if($user->role = 0)
-        {
-            return false;
-        }
-        else{ 
-            return true;
-        }
+        // if(Auth::user()->role = 0)
+        // {
+        //     return true;
+        // }
+        // else{ 
+        //     return false;
+        // }
     }
 
     /**
@@ -71,7 +71,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        
     }
 
     /**

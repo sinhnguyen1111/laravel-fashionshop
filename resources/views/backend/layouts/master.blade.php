@@ -105,5 +105,52 @@
 <script src="/backend/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/backend/dist/js/demo.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{{-- <script>
+    $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.btn-delete').click(function(e){
+            e.preventDefault();
+
+            let id = $(this).attr('data-id');
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((resault) => {
+                if (resault.isConfirmed) {
+                    $.ajax({
+                        type: 'delete',
+                        url: 'admin/user/'+id+'delete',
+                        success:function(res){
+                            if(!res.error)
+                            {
+                                Swal.fire(
+                                    'Đã xóa!',
+                                    res.message,
+                                    'success',
+                                );
+                                location.reload();
+                            }
+                            else{
+                                console.log(res.message);
+                            }
+                        }
+                    })
+                }
+            });
+           
+        });
+    });
+    
+</script> --}}
 </body>
 </html>

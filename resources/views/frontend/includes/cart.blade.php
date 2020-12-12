@@ -16,6 +16,7 @@
 <!-- End All Title Box -->
 
 <!-- Start Cart  -->
+{{-- {{ dd(Cart::content()) }}; --}}
 <div class="cart-box-main">
     <div class="container">
         <div class="row">
@@ -37,7 +38,7 @@
                             <tr>
                                 <td class="thumbnail-img">
                                     <a href="#">
-                                <img class="img-fluid" src="images/img-pro-01.jpg" alt="" />
+                                <img class="img-fluid" src="{{ asset('storage/'.$value->options->avatar) }}" alt="avatar" />
                             </a>
                                 </td>
                                 <td class="name-pr">
@@ -46,11 +47,19 @@
                             </a>
                                 </td>
                                 <td class="price-pr">
-                                    <p>$ 80.0</p>
+                                    <p>{{ number_format($value->price)}}</p>
                                 </td>
-                                <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
+                                <td class="quantity-box">
+                                    <form action="{{ route('update.cart') }}" method="POST">
+                                        @csrf
+                                    <input type="number" size="4" value="{{ $value->qty }}" min="0" step="1" class="c-input-text qty text" name="qty">
+                                        <input type="hidden" value="{{ $value->rowId }}" name="cart_rowid">
+                                    <button type="submit" value="+" name="quantity" >
+                                    </form>
+                                    
+                                </td>
                                 <td class="total-pr">
-                                    <p>$ 80.0</p>
+                                    <p>{{number_format($value->price* $value->qty)}}</p>
                                 </td>
                                 <td class="remove-pr">
                                     <a href="{{ route('frontend.cart.remove',$value->rowId)  }}">
@@ -117,7 +126,7 @@
             </div>
         </div>
 
-        <div class="row my-5">
+        {{-- <div class="row my-5">
             <div class="col-lg-6 col-sm-6">
                 <div class="coupon-box">
                     <div class="input-group input-group-sm">
@@ -133,7 +142,7 @@
                     <input value="Update Cart" type="submit">
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="row my-5">
             <div class="col-lg-8 col-sm-12"></div>
@@ -141,34 +150,28 @@
                 <div class="order-box">
                     <h3>Order summary</h3>
                     <div class="d-flex">
-                        <h4>Sub Total</h4>
-                        <div class="ml-auto font-weight-bold"> $ 130 </div>
+                        <h4>Tổng tiền</h4>
+                        <div class="ml-auto font-weight-bold"> {{ Cart::total() }} </div>
                     </div>
                     <div class="d-flex">
-                        <h4>Discount</h4>
-                        <div class="ml-auto font-weight-bold"> $ 40 </div>
+                        <h4>Thuế</h4>
+                        <div class="ml-auto font-weight-bold">0</div>
                     </div>
                     <hr class="my-1">
                     <div class="d-flex">
-                        <h4>Coupon Discount</h4>
-                        <div class="ml-auto font-weight-bold"> $ 10 </div>
+                        <h4>Phí vận chuyển</h4>
+                        <div class="ml-auto font-weight-bold"> free </div>
                     </div>
-                    <div class="d-flex">
-                        <h4>Tax</h4>
-                        <div class="ml-auto font-weight-bold"> $ 2 </div>
-                    </div>
-                    <div class="d-flex">
-                        <h4>Shipping Cost</h4>
-                        <div class="ml-auto font-weight-bold"> Free </div>
-                    </div>
+                   
+                    
                     <hr>
                     <div class="d-flex gr-total">
-                        <h5>Grand Total</h5>
-                        <div class="ml-auto h5"> $ 388 </div>
+                        <h5>Thành tiền</h5>
+                        <div class="ml-auto h5"> {{ Cart::total()}} </div>
                     </div>
                     <hr> </div>
             </div>
-            <div class="col-12 d-flex shopping-box"><a href="checkout.html" class="ml-auto btn hvr-hover">Checkout</a> </div>
+            <div class="col-12 d-flex shopping-box"><a href="{{ route('checkout') }}" class="ml-auto btn hvr-hover">Thanh toán</a> </div>
         </div>
 
     </div>

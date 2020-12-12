@@ -23,7 +23,7 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Image','user_id','id');
     }
     public function userInfo(){
-        return $this->hasOne('App\Models\UserInfo');
+        return $this->hasOne('App\Models\UserInfo','user_id');
     }
 
 

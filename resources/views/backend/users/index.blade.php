@@ -48,7 +48,7 @@
                             <th>Email</th>
                             <th>Tên</th>
                             <th class="avatar">Avatar</th>
-                            <th>Status</th>
+                            <th>Hoạt động</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -58,15 +58,23 @@
                         <tr>
                             <td>{{ $value->id }}</td>
                             <td>{{ $value->email }}</td>
-                            <td>{{ $value->name }}</td>
+                            <td><a href="{{ route('backend.userInfo',$value->id) }}">{{ $value->name }}</a></td>
                             <td>
-                                <img src="{{ asset('storage/'.$value->profile_photo_path) }}" alt="avatar" class="image">
+                               <img src="{{ asset('storage/'.$value->profile_photo_path) }}" alt="avatar" class="image">
                             </td>
                             {{-- <td>{{ $value->created_at }}</td> --}}
                             {{-- <td>{{ $value->role }}</td> --}}
                             <td>
+                                {{-- <a href="{{ route('backend.userInfo',$value->id) }}">Thông tin chi tiết</a> --}}
                                 <a href="{{ route('backend.user.edit',$value->id) }}">Sửa</a>
-                                <a href="{{ route('backend.user.delete',$value->id) }}">Xóa</a>
+                                <form action="{{ route('backend.user.delete',$value->id) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger btn-delete" data_id="{{ $value->id }}">
+                                        Xóa
+                                </button>
+                            </form>
+                                {{-- <a href="{{ route('backend.user.delete',$value->id) }}" class="btn-delete" data_id="{{ $value->id }}">Xóa</a> --}}
                             </td>
                         </tr>
                         @endforeach

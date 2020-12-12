@@ -32,21 +32,21 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Tên</label>
-                            <input type="text" class="form-control" id="" placeholder="Tên người dùng" name="username">
+                            <input type="text" class="form-control" id="" placeholder="Tên người dùng" name="username" value="{{ old('username') }}">
                         </div>
                         @error('username')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input type="email" class="form-control" id="" placeholder="Email" name="email">
+                            <input type="email" class="form-control" id="" placeholder="Email" name="email" value="{{ old('email') }}">
                         </div>
                         @error('email')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
                             <label for="exampleInputEmail1">Mật khẩu</label>
-                            <input type="password" class="form-control" id="" name="password">
+                            <input type="password" class="form-control" id="" name="password" value="{{ old('password') }}">
                         </div>
                         @error('password')
                         <div class="alert alert-danger">{{ $message }}</div>

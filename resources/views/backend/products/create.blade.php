@@ -38,7 +38,7 @@
                             <div class="alert alert-danger origin">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
-                            <label>Danh mục cha </label>
+                            <label>Danh mục </label>
                             <select class="form-control select2" style="width: 100%;" name="parent_id">
                                 <option value="0">--Chọn danh mục---</option>
                                {!! $option !!}
@@ -47,14 +47,28 @@
                                 <option>Máy ảnh</option>
                                 <option>Phụ kiện</option> --}}
                             </select>
+                            @error('parent_id')
+                        <div class="alert alert-danger origin">{{ $message }}</div>
+                    @enderror
                         </div>
+                        
                         <div class="form-group">
                             <label>Màu sắc</label>
                             <input type="text" class="form-control" name="color" placeholder="Điền màu sắc">
                         </div>
                         <div class="form-group">
                             <label>Size</label>
-                            <input type="text" class="form-control" name="size" placeholder="điền kích thước quần áo">
+                            <select class="form-control select2" style="width: 100%;" name="size">
+                                <option value="0">Chọn size</option>
+                                <option value="0">S</option>
+                                <option value="1">M</option>
+                                <option value="1">L</option>
+                                <option value="1">XL</option>
+                                <option value="1">XXL</option>
+                                <option value="1">XXXL</option>
+
+                            </select>
+                            {{-- <input type="text" class="form-control" name="size" placeholder="điền kích thước quần áo"> --}}
                         </div>
                         <div class="row">
                             <div class="col-6">
@@ -103,8 +117,8 @@
                             <label>Trạng thái sản phẩm</label>
                             <select class="form-control select2" style="width: 100%;" name="status">
                                 <option >--Chọn trạng thái---</option>
-                                <option value="1">Đang nhập</option>
-                                <option value="2">Mở bán</option>
+                                <option value="1">Mới</option>
+                                <option value="2">Sale</option>
                                 <option value="0">Hết hàng</option>
                             </select>
                         </div>

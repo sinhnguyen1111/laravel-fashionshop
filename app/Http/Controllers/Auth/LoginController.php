@@ -56,10 +56,11 @@ class LoginController extends Controller
         ];
         if(Auth::attempt($arr)){
             $request->session()->flash('success','Đăng nhập thành công');
-            return view('backend.dashboard');
+            // return view('backend.dashboard');
+            return redirect()->route('backend.dashboard');
         }
         else{
-        // else if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'role'=>0])){
+        // else if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'role'=>1])){
           
             $request->session()->flash('fail','Đăng nhập không thành công');
                 // return  redirect()->route('frontend.index');

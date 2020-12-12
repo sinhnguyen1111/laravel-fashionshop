@@ -12,7 +12,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item active"><a class="nav-link" href="{{ route('home.index') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
                 <li class="dropdown megamenu-fw">
                     <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
@@ -27,7 +27,7 @@
                                     <ul class="menu-col">
                                         @foreach ($value->categoryChildrent as $item)
                                             
-                                        <li><a href="shop.html">{{ $item->name }}</a></li>
+                                        <li><a href="{{ route('product.index',['slug'=> $item->slug,'id'=>$item->id]) }}">{{ $item->name }}</a></li>
                                         @endforeach
 
                                        
@@ -62,7 +62,7 @@
         <!-- /.navbar-collapse -->
 
         <!-- Start Atribute Navigation -->
-        <div class="attr-nav">
+        {{-- <div class="attr-nav">
             <ul>
                 <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                 <li class="side-menu"><a href="#">
@@ -70,7 +70,7 @@
                     <span class="badge">3</span>
             </a></li>
             </ul>
-        </div>
+        </div> --}}
         <!-- End Atribute Navigation -->
     </div>
     <!-- Start Side Menu -->

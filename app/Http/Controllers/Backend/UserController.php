@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Models\Image;
+use App\Models\UserInfo;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,6 +17,8 @@ class UserController extends Controller
 {
     public function index()
     {
+    //  $user = User::find(33)->userInfo;
+    //  dd($user);
       
 
         $users = User::select()->orderBy('created_at','desc')->paginate(5);
@@ -185,4 +188,10 @@ $order=Order::find(1);//Tìm order_id=1
 $order->products()->detach(2);
 
     }
+    public function info($id){
+        $info = User::find($id)->userInfo->where('user_id',$id)->get();
+        // ->userInfo->first()
+        // dd($info->userInfo->fullname);
+        return view('backend.users.detail',['user_info'=>$info]);
+        }
 }

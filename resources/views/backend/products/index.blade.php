@@ -47,8 +47,8 @@
                         <tr>
                             <th>ID</th>
                             <th>Tên sản phẩm</th>
-                            <th>Giá gốc</th>
-                            <th>Giá sale</th>
+                            <th>Giá gốc(VNĐ)</th>
+                            <th>Giá sale(VNĐ)</th>
                             <th>Danh mục</th>
                             <th>Hình ảnh</th>
                             <th>Chỉnh sửa</th>
@@ -59,10 +59,11 @@
                      
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->origin_price }}</td>
-                                <td>{{ $item->sale_price }}</td>
-                                <td>{{ optional($item->category)->name }}</td>
+                                <td><a href="{{ route('frontend.product.show',$item->id) }}">{{ $item->name }}</a></td>
+                                <td>{{ number_format($item->origin_price )}}</td>
+                                <td>{{ number_format($item->sale_price) }} </td>
+                                {{-- <td>{{  App\Models\Category::find($item->category_id)->name}}</td> --}}
+                                <td></td>
                                <td>
                                   <img src={{ asset('storage/'.$item->avatar) }} alt="hoddie" class="avt">
                                </td>

@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use App\Models\User;
+
 
 class Image extends Model
 {
-    // use Notifiable;
+    use Notifiable;
     
     protected $table='images';
     protected $fillable = [

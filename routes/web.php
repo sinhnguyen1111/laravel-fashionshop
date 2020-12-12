@@ -17,9 +17,12 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('cart/add/{id}','Frontend\CartController@add')->name('cart.add');
+Route::post('cart/add/{id}','Frontend\CartController@add')->name('cart.add');
+Route::post('update/cart','Frontend\CartController@update')->name('update.cart');
 Route::get('listcart','Frontend\CartController@index')->name('frontend.cart.index');
+Route::get('detail_product','Frontend\CartController@show')->name('frontend.cart.show');
 Route::get('cart/remove/{id}','Frontend\CartController@remove')->name('frontend.cart.remove');
+Route::get('checkout','Frontend\CartController@checkout')->name('checkout');
 
 Auth::routes();
 // Route::get('admin','LoginController@showLoginForm')->name('admin.login');
@@ -55,6 +58,8 @@ Route::group([
     Route::put('{id}/update','Backend\ProductController@update')->name('backend.product.update');
 
     Route::get('/{id}/edit','Backend\ProductController@edit')->name('backend.product.edit');
+
+    Route::get('detail_product/{id}','Frontend\ProductController@show')->name('frontend.product.show');
 });
 
 
@@ -72,9 +77,12 @@ Route::group([
 
     Route::put('{id}/update','Backend\UserController@update')->name('backend.user.update');
 
-    Route::get('/{id}/delete','Backend\UserController@destroy')->name('backend.user.delete');
+    Route::delete('/{id}/delete','Backend\UserController@destroy')->name('backend.user.delete');
 
     Route::get('{id}/edit','Backend\UserController@edit')->name('backend.user.edit');
+
+    Route::get('user_info/{id}','Backend\UserController@info')->name('backend.userInfo');
+
 });
 
 
@@ -86,7 +94,7 @@ Route::group([
     Route::get('index','Backend\CategoryController@index')->name('backend.category.index');
     Route::get('create','Backend\CategoryController@create')->name('backend.category.create');
     Route::post('store','Backend\CategoryController@store')->name('backend.category.store');
-    Route::put('update','Backend\CategoryController@update')->name('backend.category.update');
+    Route::put('{id}/update','Backend\CategoryController@update')->name('backend.category.update');
     Route::get('{id}/edit','Backend\CategoryController@edit')->name('backend.category.edit');
     Route::get('{id}/delete','Backend\CategoryController@destroy')->name('backend.category.delete');
 });
@@ -96,7 +104,7 @@ Route::group([
 Route::get('/','Frontend\HomeController@index')->name('home.index');
 Route::get('/about_us','Frontend\AboutController@index')->name('about.index');
 Route::get('/detail_product','Frontend\ProductController@show')->name('product.show');
-// Route::get('/contact','Frontend\ContactController@index')->name('contact.index');
+Route::get('/product_cate/{slug}/{id}','Frontend\CategoryController@index')->name('product.index');
 
 Route::get('user_info',[App\Http\Controllers\Backend\UserController::class,'test']);
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

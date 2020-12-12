@@ -63,7 +63,7 @@
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-default">Huỷ bỏ</button>
-                        <button type="submit" class="btn btn-sucess">Tạo mới</button>
+                        <button type="submit" class="btn btn-sucess">Cập nhật</button>
                     </div>
                 </form>
             </div>

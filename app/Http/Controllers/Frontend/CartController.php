@@ -17,10 +17,20 @@ class CartController extends Controller
         ]);
         // return view('frontend.includes.cart');
     }
+    
     public function add($id){
 
         $product = Product::find($id);
-        Cart::add($product->id,$product->name,$product->sale_price,0);
+        $data['id']=$product->id;
+        $data['qty']='10';
+        $data['name']=$product->name;
+        $data['price']=$product->sale_price;
+        $data['weight']=$product->sale_price;
+        $data['options']['avatar']=$product->avatar;
+        
+        // Cart::add('293ad', 'Product 1', 1, 9.99, 550);
+        Cart::add($data);
+        // Cart::destroy();
         return redirect()->route('frontend.cart.index');
         
         
@@ -30,4 +40,16 @@ class CartController extends Controller
         Cart::remove($cart_id);
         return redirect()->route('frontend.cart.index');
     }
+    public function update(Request $request){
+        $rowid=$request->cart_rowid;
+        $quantity = $request->qty;
+        Cart::update($rowid,$quantity);
+        return redirect()->route('frontend.cart.index');
+
+    }
+    public function checkout(){
+        return view('frontend.includes.checkout');
+    }
+
+    
 }

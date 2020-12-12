@@ -111,17 +111,17 @@
                                     <th>Tên sản phẩm</th>
                                     <th>Thời gian</th>
                                     <th>Status</th>
-                                    <th>Mô tả</th>
+                                    
                                 </tr>
                                 </thead>
                                 <tbody>
                                  @foreach($new_product as $product)
                                  <tr>
                                     <td>{{ $product->id }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>11-7-2014</td>
+                                    <td><a href="{{ route('frontend.product.show',$product->id) }}">{{ $product->name }}</a></td>
+                                    <td>{{  $product->created_at }}</td>
                                     <td><span class="tag tag-success">{{ $product->status }}</span></td>
-                                    <td>{{ $product->content }}</td>
+                                    
                                 </tr>
                                  @endforeach
                                 

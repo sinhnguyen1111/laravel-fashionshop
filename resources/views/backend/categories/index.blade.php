@@ -50,7 +50,7 @@
                                 <th>Tên danh mục</th>
                                 <th>Parent_id</th>
                                
-                                <th>Mô tả</th>
+                                {{-- <th>Mô tả</th> --}}
                                 <th>Hoạt động</th>
                             </tr>
                            
@@ -61,7 +61,7 @@
                                 <td>{{ $value->id }}</td>
                                 <td>{{ $value->name }}</td>
                                 <td>{{ $value->parent_id }}</td>
-                                <td><span class="tag tag-success">Approved</span></td>
+                                {{-- <td><span class="tag tag-success">Approved</span></td> --}}
                                 <td>
                                     <a href="{{ route('backend.category.edit',$value->id) }}">Sửa</a>
                                     <a href="{{ route('backend.category.delete',$value->id) }}">Xóa</a>

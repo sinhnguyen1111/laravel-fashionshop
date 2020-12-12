@@ -7,7 +7,7 @@
                         <h4>About ThewayShop</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </p>
-                        <ul>
+                        {{-- <ul>
                             <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
@@ -15,7 +15,7 @@
                             <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
-                        </ul>
+                        </ul> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">

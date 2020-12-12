@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         // dd($user);
-        $category = Category::paginate(5); 
+        $category = Category::select()->orderBy('created_at','desc')->paginate(5); 
         return view('backend.categories.index')->with([
             'categories' => $category
         ]);
@@ -89,9 +89,9 @@ class CategoryController extends Controller
     }
 
  
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
-        $category = new Category();
+        $category = Category::find($id);
         $category->name=$request->get('name');
         $category->parent_id=$request->get('parent_id');
         // dd($category->parent_id);

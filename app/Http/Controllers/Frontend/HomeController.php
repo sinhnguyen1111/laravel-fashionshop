@@ -24,7 +24,7 @@ class HomeController extends Controller
     {
         $products = Product::latest()->take(6)->get();
     
-
+        $category = Category::where('parent_id','0')->get();
         // $cate = Category::where('parent_id','id')->get();
         
         // // dd($cate);
@@ -120,7 +120,8 @@ class HomeController extends Controller
     //        dd(1);
         return view('frontend.index',[
             
-            'product'=>$products
+            'product'=>$products,
+            'categories'=>$category
         ]);
     }
     

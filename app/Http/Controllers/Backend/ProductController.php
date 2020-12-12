@@ -56,7 +56,7 @@ class ProductController extends Controller
             'products'=>$product
         ]);
     }
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
         
         $product = new Product();
@@ -195,7 +195,13 @@ class ProductController extends Controller
 
     public function destroy($id,Request $request){
         $product = Product::find($id);
+        // if(Auth::user()->can('delete',$product)){
         $delete=$product->delete();
+
+        // }
+        // else{
+        //     dd('không được phép xóa');
+        // }
         if($delete){
             $request->session()->flash('success','Xóa thành công');
         }
